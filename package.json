@@ -1,0 +1,19 @@
+{
+  "name": "lohika-nodejs-training",
+  "version": "1.0.0",
+  "description": "Lohika NodeJS training",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aandriyenko-lohika/lohika-nodejs-training.git"
+  },
+  "author": "Arkadiy Andriyenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aandriyenko-lohika/lohika-nodejs-training/issues"
+  },
+  "homepage": "https://github.com/aandriyenko-lohika/lohika-nodejs-training#readme"
+}
