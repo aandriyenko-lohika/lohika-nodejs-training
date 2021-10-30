@@ -1,7 +1,7 @@
 {
-  "name": "lohika-nodejs-training",
+  "name": "Lesson1",
   "version": "1.0.0",
-  "description": "Lohika NodeJS training",
+  "description": "Lohika NodeJS course. Lesson 1",
   "main": "index.js",
   "scripts": {
     "start": "node index.js --env dev"
