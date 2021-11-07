@@ -3,21 +3,12 @@ import http from 'http';
 import { PORT } from './config';
 import logger from './logger';
 
-function getRawBody(req: http.IncomingMessage): Promise<string> {
+async function getRawBody(req: http.IncomingMessage): Promise<string> {
   const chunks: Uint8Array[] = [];
-  return new Promise((resolve, reject) => {
-    req
-      .on('data', (chunk) => {
-        chunks.push(chunk);
-      })
-      .on('end', () => {
-        const body = Buffer.concat(chunks).toString();
-        resolve(body);
-      })
-      .on('error', (err) => {
-        reject(err);
-      });
-  });
+  for await (let chunk of req) {
+    chunks.push(chunk);
+  }
+  return Buffer.concat(chunks).toString();
 }
 
 function bodyToJson(rawBody: string): { body?: unknown; error?: unknown } {
@@ -43,25 +34,19 @@ function log(req: http.IncomingMessage, controllerName: string) {
   );
 }
 
-// Request might be handled asyncronosly therefore 
+// Request might be handled asyncronosly therefore
 // this handler is async.
-async function defaultController(
-  req: http.IncomingMessage
-) {
+async function defaultController(req: http.IncomingMessage) {
   log(req, 'defaultController');
-  return 'Default'
+  return 'Default';
 }
 
-async function getUserController(
-  req: http.IncomingMessage
-) {
+async function getUserController(req: http.IncomingMessage) {
   log(req, 'getUserController');
-  return 'GET /user'
+  return 'GET /user';
 }
 
-async function postUserController(
-  req: http.IncomingMessage
-) {
+async function postUserController(req: http.IncomingMessage) {
   log(req, 'postUserController');
   const rawBody = await getRawBody(req);
   const { body, error } = bodyToJson(rawBody);
@@ -71,7 +56,7 @@ async function postUserController(
   }
 
   logger.debug('[postUserController]: Body:', body);
-  return 'POST /user'
+  return 'POST /user';
 }
 
 const server = http.createServer(async (req, res) => {
